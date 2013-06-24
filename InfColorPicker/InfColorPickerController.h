@@ -60,6 +60,9 @@
 - (void) colorPickerControllerDidFinish: (InfColorPickerController*) controller;
 	// This is only called when the color picker is presented modally.
 
+- (void) colorPickerControllerDidCancel: (InfColorPickerController*) controller;
+    // This is only called when the color picker is presented modally.
+
 - (void) colorPickerControllerDidChangeColor: (InfColorPickerController*) controller;
 
 @end

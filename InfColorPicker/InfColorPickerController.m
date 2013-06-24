@@ -127,10 +127,10 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
 	
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                               target:self
-                                                                                              action:@selector(closeColourPicker)];
+                                                                                              action:@selector(closeColorPicker)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
                                                                                              target:self
-                                                                                             action:@selector(cancelColourPicker)];
+                                                                                             action:@selector(cancelColorPicker)];
 
 	barPicker.value = hue;
 	squareView.hue = hue;
@@ -217,6 +217,14 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
 - (IBAction) done: (id) sender
 {
 	[ self.delegate colorPickerControllerDidFinish: self ];	
+}
+
+- (void) closeColorPicker {
+    [ self.delegate colorPickerControllerDidFinish: self ];
+}
+
+- (void) cancelColorPicker {
+    [ self.delegate colorPickerControllerDidCancel: self ];
 }
 
 //------------------------------------------------------------------------------

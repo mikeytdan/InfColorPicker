@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "InfColorPicker"
-  s.version = "0.0.1"
+  s.version = "0.0.2"
   s.summary = "iOS color picker view controller which presents a hue bar and a saturation/brightness box to allow selection of any RGB color."
   s.homepage = "https://github.com/InfinitApps/InfColorPicker"
   s.license = 'MIT'
