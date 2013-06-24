@@ -124,6 +124,13 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
 	[ super viewDidLoad ];
 
 	self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+	
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                              target:self
+                                                                                              action:@selector(closeColourPicker)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                                             target:self
+                                                                                             action:@selector(cancelColourPicker)];
 
 	barPicker.value = hue;
 	squareView.hue = hue;
