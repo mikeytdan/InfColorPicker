@@ -48,6 +48,7 @@
 @property( retain, nonatomic ) IBOutlet UIView* sourceColorView;
 @property( retain, nonatomic ) IBOutlet UIView* resultColorView;
 @property( retain, nonatomic ) IBOutlet UINavigationController* navController;
+@property( retain, nonatomic ) IBOutlet UITextField* hexTextField;
 
 @end
 

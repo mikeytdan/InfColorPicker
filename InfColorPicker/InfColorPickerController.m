@@ -16,6 +16,98 @@
 #import "InfColorSquarePicker.h"
 #import "InfHSBSupport.h"
 
+@interface UIColor (Hex)
+- (CGColorSpaceModel) colorSpaceModel;
+- (BOOL) canProvideRGBComponents;
+@end
+
+@implementation  UIColor (Hex)
+
++ (UIColor *)colorWithHexadecimalCode:(NSString *)hexadecimalString {
+    NSString *cString = [[hexadecimalString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
+    
+    // String should be 6, 7 or 8 characters
+    if ([cString length] < 6) return nil;
+    
+    // strip 0X if it appears
+    if ([cString hasPrefix:@"0X"]) cString = [cString substringFromIndex:2];
+    
+    // strip # if it appears
+    if ([cString hasPrefix:@"#"]) cString = [cString substringFromIndex:1];
+    
+    if ([cString length] != 6) return nil;
+    
+    // Separate into r, g, b substrings
+    NSRange range;
+    range.location = 0;
+    range.length = 2;
+    NSString *rString = [cString substringWithRange:range];
+    
+    range.location = 2;
+    NSString *gString = [cString substringWithRange:range];
+    
+    range.location = 4;
+    NSString *bString = [cString substringWithRange:range];
+    
+    // Scan values
+    unsigned int r, g, b;
+    [[NSScanner scannerWithString:rString] scanHexInt:&r];
+    [[NSScanner scannerWithString:gString] scanHexInt:&g];
+    [[NSScanner scannerWithString:bString] scanHexInt:&b];
+    
+    return [UIColor colorWithRed:((float) r / 255.0f)
+                           green:((float) g / 255.0f)
+                            blue:((float) b / 255.0f)
+                           alpha:1.f];
+}
+
+- (CGFloat) red {
+    NSAssert (self.canProvideRGBComponents, @"Must be a RGB color to use -red, -green, -blue");
+    const CGFloat *c = CGColorGetComponents(self.CGColor);
+    return c[0];
+}
+- (CGFloat) green {
+    NSAssert (self.canProvideRGBComponents, @"Must be a RGB color to use -red, -green, -blue");
+    const CGFloat *c = CGColorGetComponents(self.CGColor);
+    if ([self colorSpaceModel] == kCGColorSpaceModelMonochrome) return c[0];
+    return c[1];
+}
+- (CGFloat) blue {
+    NSAssert (self.canProvideRGBComponents, @"Must be a RGB color to use -red, -green, -blue");
+    const CGFloat *c = CGColorGetComponents(self.CGColor);
+    if ([self colorSpaceModel] == kCGColorSpaceModelMonochrome) return c[0];
+    return c[2];
+}
+
+- (CGColorSpaceModel) colorSpaceModel {
+    return CGColorSpaceGetModel(CGColorGetColorSpace(self.CGColor));
+}
+
+- (BOOL) canProvideRGBComponents {
+    return (([self colorSpaceModel] == kCGColorSpaceModelRGB) ||
+            ([self colorSpaceModel] == kCGColorSpaceModelMonochrome));
+}
+
+- (NSString *) hexString {
+    NSAssert (self.canProvideRGBComponents, @"Must be a RGB color to use hexString");
+    CGFloat r, g, b;
+    r = self.red;
+    g = self.green;
+    b = self.blue;
+    // Fix range if needed
+    if (r < 0.0f) r = 0.0f;
+        if (g < 0.0f) g = 0.0f;
+            if (b < 0.0f) b = 0.0f;
+                if (r > 1.0f) r = 1.0f;
+                    if (g > 1.0f) g = 1.0f;
+                        if (b > 1.0f) b = 1.0f;
+                            // Convert to hex string between 0x00 and 0xFF
+                            return [NSString stringWithFormat:@"%02X%02X%02X",
+                                    (int)(r * 255), (int)(g * 255), (int)(b * 255)];
+}
+
+@end
+
 //------------------------------------------------------------------------------
 
 static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
@@ -40,7 +132,7 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
 
 //==============================================================================
 
-@interface InfColorPickerController()
+@interface InfColorPickerController() <UITextFieldDelegate>
 
 - (void) updateResultColor;
 
@@ -64,6 +156,7 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
 @synthesize barPicker, squarePicker;
 @synthesize sourceColorView,  resultColorView;
 @synthesize navController;
+@synthesize hexTextField;
 
 //------------------------------------------------------------------------------
 #pragma mark	Class methods
@@ -98,6 +191,7 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
 	[ sourceColor release ];
 	[ resultColor release ];
 	
+    [hexTextField release];
 	[ super dealloc ];
 }
 
@@ -132,22 +226,32 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
                                                                                              target:self
                                                                                              action:@selector(cancelColorPicker)];
 
+    self.hexTextField.delegate = self;
+    
 	barPicker.value = hue;
 	squareView.hue = hue;
 	squarePicker.hue = hue;
 	squarePicker.value = CGPointMake( saturation, brightness );
 
 	if( sourceColor )
+    {
 		sourceColorView.backgroundColor = sourceColor;
+    }
 	
 	if( resultColor )
+    {
 		resultColorView.backgroundColor = resultColor;
+    }
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.view addGestureRecognizer:tap];
 }
 
 //------------------------------------------------------------------------------
 
 - (void) viewDidUnload
 {
+    [self setHexTextField:nil];
 	[ super viewDidUnload ];
 	
 	// Release any retained subviews of the main view.
@@ -257,6 +361,8 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
 	resultColorView.backgroundColor = resultColor;
 	
 	[ self informDelegateDidChangeColor ];
+    
+    self.hexTextField.text = [NSString stringWithFormat:@"#%@", [resultColor hexString]];
 }
 
 //------------------------------------------------------------------------------
@@ -310,6 +416,55 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
 }
 
 //------------------------------------------------------------------------------
+
+#pragma mark    UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString *newString = [[textField.text stringByReplacingCharactersInRange:range withString:string] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    NSRange rangeOfHash = [newString rangeOfString:@"#"];
+    if (rangeOfHash.location != 0) {
+        return NO;
+    }
+    
+    if (newString.length > 7) {
+        return NO;
+    }
+    
+    UIColor *colour = [UIColor colorWithHexadecimalCode:newString];
+    if (colour) {
+        [self setResultColor:colour];
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
+}
+
+- (void)hideKeyboard {
+    UIResponder *responder = [self findFirstResponder:self.view];
+    [responder resignFirstResponder];
+}
+
+- (UIView *)findFirstResponder:(UIView *)aView {
+    if (aView.isFirstResponder) {
+        return aView;
+    }
+    
+    for (UIView *subview in aView.subviews) {
+        UIView *firstResponder = [self findFirstResponder:subview];
+        
+        if (firstResponder != nil) {
+            return firstResponder;
+        }
+    }
+    
+    return nil;
+}
 
 @end
 
