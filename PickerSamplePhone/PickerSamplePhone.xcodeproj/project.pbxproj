@@ -15,7 +15,7 @@
 		2899E5220DE3E06400AC0155 /* PickerSamplePhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* PickerSamplePhoneViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* PickerSamplePhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* PickerSamplePhoneViewController.m */; };
-		31DC852E17BA3BE60029DB64 /* PDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 31DC852D17BA3BE60029DB64 /* PDButton.m */; };
+		31DC853117BA415E0029DB64 /* PDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 31DC853017BA415E0029DB64 /* PDButton.m */; };
 		6923F3E613F481720051A217 /* InfColorBarPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 6923F3DA13F481720051A217 /* InfColorBarPicker.m */; };
 		6923F3E713F481720051A217 /* InfColorIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6923F3DC13F481720051A217 /* InfColorIndicatorView.m */; };
 		6923F3E813F481720051A217 /* InfColorPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6923F3DE13F481720051A217 /* InfColorPickerController.m */; };
@@ -37,8 +37,8 @@
 		28D7ACF60DDB3853001CB0EB /* PickerSamplePhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerSamplePhoneViewController.h; sourceTree = "<group>"; };
 		28D7ACF70DDB3853001CB0EB /* PickerSamplePhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerSamplePhoneViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		31DC852C17BA3BE60029DB64 /* PDButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDButton.h; sourceTree = "<group>"; };
-		31DC852D17BA3BE60029DB64 /* PDButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDButton.m; sourceTree = "<group>"; };
+		31DC852F17BA415E0029DB64 /* PDButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDButton.h; sourceTree = "<group>"; };
+		31DC853017BA415E0029DB64 /* PDButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDButton.m; sourceTree = "<group>"; };
 		6923F3D913F481720051A217 /* InfColorBarPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfColorBarPicker.h; sourceTree = "<group>"; };
 		6923F3DA13F481720051A217 /* InfColorBarPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfColorBarPicker.m; sourceTree = "<group>"; };
 		6923F3DB13F481720051A217 /* InfColorIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfColorIndicatorView.h; sourceTree = "<group>"; };
@@ -77,8 +77,6 @@
 				1D3623250D0F684500981E51 /* PickerSamplePhoneAppDelegate.m */,
 				28D7ACF60DDB3853001CB0EB /* PickerSamplePhoneViewController.h */,
 				28D7ACF70DDB3853001CB0EB /* PickerSamplePhoneViewController.m */,
-				31DC852C17BA3BE60029DB64 /* PDButton.h */,
-				31DC852D17BA3BE60029DB64 /* PDButton.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -135,6 +133,8 @@
 		6923F3D813F481720051A217 /* InfColorPicker */ = {
 			isa = PBXGroup;
 			children = (
+				31DC852F17BA415E0029DB64 /* PDButton.h */,
+				31DC853017BA415E0029DB64 /* PDButton.m */,
 				69F47A3114181FB700E29503 /* InfColorPicker.h */,
 				6923F3DD13F481720051A217 /* InfColorPickerController.h */,
 				6923F3DE13F481720051A217 /* InfColorPickerController.m */,
@@ -228,7 +228,7 @@
 				6923F3EA13F481720051A217 /* InfColorSquarePicker.m in Sources */,
 				6923F3EB13F481720051A217 /* InfHSBSupport.m in Sources */,
 				6923F3EC13F481720051A217 /* InfSourceColorView.m in Sources */,
-				31DC852E17BA3BE60029DB64 /* PDButton.m in Sources */,
+				31DC853117BA415E0029DB64 /* PDButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
