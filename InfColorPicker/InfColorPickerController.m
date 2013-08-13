@@ -15,7 +15,7 @@
 #import "InfColorBarPicker.h"
 #import "InfColorSquarePicker.h"
 #import "InfHSBSupport.h"
-#import "PDButton.h"
+#import "InfColorPickerButton.h"
 
 @interface UIColor (Hex)
 - (CGColorSpaceModel) colorSpaceModel;
@@ -221,7 +221,7 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
 	self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     
     CGFloat nBHeight = (([UIScreen mainScreen].bounds.size.height == 568)) ? 50 : 46;   
-    PDButton *cancelButton = [PDButton buttonWithType:UIButtonTypeCustom];
+    InfColorPickerButton *cancelButton = [InfColorPickerButton buttonWithType:UIButtonTypeCustom];
     cancelButton.titleLabel.font = [UIFont boldSystemFontOfSize:13];
     cancelButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     cancelButton.titleLabel.textColor = [UIColor whiteColor];
@@ -292,7 +292,7 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
 	nav.navigationBar.barStyle = UIBarStyleBlackOpaque;
 	    
     CGFloat nBHeight = (([UIScreen mainScreen].bounds.size.height == 568)) ? 50 : 46;
-    PDButton *doneButton = [PDButton buttonWithType:UIButtonTypeCustom];
+    InfColorPickerButton *doneButton = [InfColorPickerButton buttonWithType:UIButtonTypeCustom];
     doneButton.titleLabel.font = [UIFont boldSystemFontOfSize:13];
     doneButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     doneButton.titleLabel.textColor = [UIColor whiteColor];

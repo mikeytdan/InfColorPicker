@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 Caffeinehit Ltd. All rights reserved.
 //
 
-#import "PDButton.h"
+#import "InfColorPickerButton.h"
 #import <QuartzCore/QuartzCore.h>
 
-@implementation PDButton
+@implementation InfColorPickerButton
 
 - (id)initWithFrame:(CGRect)frame
 {
