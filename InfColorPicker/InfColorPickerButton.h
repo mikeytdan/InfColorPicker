@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PDButton : UIButton
+@interface InfColorPickerButton : UIButton
 
 @end
