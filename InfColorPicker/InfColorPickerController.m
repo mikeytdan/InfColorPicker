@@ -235,6 +235,21 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
     cancelButtonFrame.origin.y = (nBHeight / 2) - (cancelButtonFrame.size.height / 2);
     cancelButton.frame = cancelButtonFrame;
 
+    InfColorPickerButton *doneButton = [InfColorPickerButton buttonWithType:UIButtonTypeCustom];
+    doneButton.titleLabel.font = [UIFont boldSystemFontOfSize:13];
+    doneButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    doneButton.titleLabel.textColor = [UIColor whiteColor];
+    [doneButton addTarget:self action:@selector(done:) forControlEvents:UIControlEventTouchUpInside];
+    [doneButton setTitle:NSLocalizedString(@"DONE", nil) forState:UIControlStateNormal];
+    doneButton.frame = CGRectMake(0, 0, 100, 100); //fake, but otherwise button.titleLabel.frame will be CGRectZero
+    CGRect doneButtonFrame = doneButton.titleLabel.frame;
+    doneButtonFrame.size.width += 20;
+    doneButtonFrame.size.height += 20;
+    doneButtonFrame.origin.x = self.view.frame.size.width - doneButtonFrame.size.width - 4;
+    doneButtonFrame.origin.y = (nBHeight / 2) - (doneButtonFrame.size.height / 2);
+    doneButton.frame = doneButtonFrame;
+    [self.navigationController.navigationBar addSubview:doneButton];
+
     [self.navigationController.navigationBar addSubview:cancelButton];
     
     self.hexTextField.delegate = self;
