@@ -15,6 +15,7 @@
 #import "InfColorBarPicker.h"
 #import "InfColorSquarePicker.h"
 #import "InfHSBSupport.h"
+#import "PDButton.h"
 
 @interface UIColor (Hex)
 - (CGColorSpaceModel) colorSpaceModel;
@@ -218,14 +219,24 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
 	[ super viewDidLoad ];
 
 	self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-	
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                                                                              target:self
-                                                                                              action:@selector(closeColorPicker)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-                                                                                             target:self
-                                                                                             action:@selector(cancelColorPicker)];
+    
+    CGFloat nBHeight = (([UIScreen mainScreen].bounds.size.height == 568)) ? 50 : 46;   
+    PDButton *cancelButton = [PDButton buttonWithType:UIButtonTypeCustom];
+    cancelButton.titleLabel.font = [UIFont boldSystemFontOfSize:13];
+    cancelButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    cancelButton.titleLabel.textColor = [UIColor whiteColor];
+    [cancelButton addTarget:self action:@selector(cancelColorPicker) forControlEvents:UIControlEventTouchUpInside];
+    [cancelButton setTitle:NSLocalizedString(@"CANCEL", nil) forState:UIControlStateNormal];
+    cancelButton.frame = CGRectMake(0, 0, 100, 100); //fake
+    CGRect cancelButtonFrame = cancelButton.titleLabel.frame;
+    cancelButtonFrame.size.width += 20;
+    cancelButtonFrame.size.height += 20;
+    cancelButtonFrame.origin.x = 7;
+    cancelButtonFrame.origin.y = (nBHeight / 2) - (cancelButtonFrame.size.height / 2);
+    cancelButton.frame = cancelButtonFrame;
 
+    [self.navigationController.navigationBar addSubview:cancelButton];
+    
     self.hexTextField.delegate = self;
     
 	barPicker.value = hue;
@@ -279,8 +290,22 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
 	UINavigationController* nav = [ [ [ UINavigationController alloc ] initWithRootViewController: self ] autorelease ];
 	
 	nav.navigationBar.barStyle = UIBarStyleBlackOpaque;
-	
-	self.navigationItem.rightBarButtonItem = [ [ [ UIBarButtonItem alloc ] initWithBarButtonSystemItem: UIBarButtonSystemItemDone target: self action: @selector( done: ) ] autorelease ];
+	    
+    CGFloat nBHeight = (([UIScreen mainScreen].bounds.size.height == 568)) ? 50 : 46;
+    PDButton *doneButton = [PDButton buttonWithType:UIButtonTypeCustom];
+    doneButton.titleLabel.font = [UIFont boldSystemFontOfSize:13];
+    doneButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    doneButton.titleLabel.textColor = [UIColor whiteColor];
+    [doneButton addTarget:self action:@selector(done:) forControlEvents:UIControlEventTouchUpInside];
+    [doneButton setTitle:NSLocalizedString(@"DONE", nil) forState:UIControlStateNormal];
+    doneButton.frame = CGRectMake(0, 0, 100, 100); //fake, but otherwise button.titleLabel.frame will be CGRectZero
+    CGRect doneButtonFrame = doneButton.titleLabel.frame;
+    doneButtonFrame.size.width += 20;
+    doneButtonFrame.size.height += 20;
+    doneButtonFrame.origin.x = self.view.frame.size.width - doneButtonFrame.size.width - 4;
+    doneButtonFrame.origin.y = (nBHeight / 2) - (doneButtonFrame.size.height / 2);
+    doneButton.frame = doneButtonFrame;
+    [self.navigationController.navigationBar addSubview:doneButton];
 				
 	[ controller presentModalViewController: nav animated: YES ];
 }
