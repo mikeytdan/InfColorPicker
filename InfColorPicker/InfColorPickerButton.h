@@ -1,5 +1,5 @@
 //
-//  PDButton.h
+//  InfColorPickerButton.h
 //  Pin Drop
 //
 //  Created by Giacomo Saccardo on 12/08/2013.
