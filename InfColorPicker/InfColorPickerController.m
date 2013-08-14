@@ -245,7 +245,7 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
     CGRect doneButtonFrame = doneButton.titleLabel.frame;
     doneButtonFrame.size.width += 20;
     doneButtonFrame.size.height += 20;
-    doneButtonFrame.origin.x = self.view.frame.size.width - doneButtonFrame.size.width - 4;
+    doneButtonFrame.origin.x = self.view.frame.size.width - doneButtonFrame.size.width - 7;
     doneButtonFrame.origin.y = (nBHeight / 2) - (doneButtonFrame.size.height / 2);
     doneButton.frame = doneButtonFrame;
     [self.navigationController.navigationBar addSubview:doneButton];
@@ -317,7 +317,7 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
     CGRect doneButtonFrame = doneButton.titleLabel.frame;
     doneButtonFrame.size.width += 20;
     doneButtonFrame.size.height += 20;
-    doneButtonFrame.origin.x = self.view.frame.size.width - doneButtonFrame.size.width - 4;
+    doneButtonFrame.origin.x = self.view.frame.size.width - doneButtonFrame.size.width - 7;
     doneButtonFrame.origin.y = (nBHeight / 2) - (doneButtonFrame.size.height / 2);
     doneButton.frame = doneButtonFrame;
     [self.navigationController.navigationBar addSubview:doneButton];
