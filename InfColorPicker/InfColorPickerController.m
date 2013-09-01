@@ -22,6 +22,8 @@
 - (BOOL) canProvideRGBComponents;
 @end
 
+// Test
+
 @implementation  UIColor (Hex)
 
 + (UIColor *)colorWithHexadecimalCode:(NSString *)hexadecimalString {
